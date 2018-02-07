@@ -55,7 +55,7 @@ public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
 ```java
 ViewPagerUpdater.getInstance().setUpdateTime(10000);
 ```
-
+<br><br>
 ## Gradle 설정
 ### root build.gradle
 ```java
