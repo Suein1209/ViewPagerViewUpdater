@@ -30,5 +30,6 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setAdapter(adapter);
         ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
         ViewPagerUpdater.getInstance().setWithoutPage(2, 3);
+        ViewPagerUpdater.getInstance().setUpdateTime(10000);
     }
 }
