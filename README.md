@@ -20,8 +20,7 @@ private ActivityMainBinding binding;
     }
 ```
 FragmentPagerItems는 com.ogaclejapan.smarttablayout:utils-v4 라이브러리다
-
-
+<br><br>
 
 # Setup
 viewpager 설정은 단순하다. viewpager를 설정하면 된다.
