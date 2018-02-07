@@ -63,6 +63,6 @@ allprojects {
 ### dependency
 ```java
 dependencies {
-  compile 'com.github.Suein1209:ViewpagerViewUpdater:0.0.1'
+  compile 'com.github.Suein1209:ViewpagerViewUpdater:0.0.2'
 }
 ```
