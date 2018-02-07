@@ -8,8 +8,6 @@ import com.google.common.base.Preconditions;
 import com.suein.viewpagerivewupdater.ViewPagerPositionEvent;
 import com.suein.viewpagerivewupdater.ViewPagerUpdater;
 
-import lombok.AccessLevel;
-import lombok.Getter;
 import utils.v4.FragmentPagerItem;
 
 public abstract class ViewPagerViewUpdaterFragmentBase extends Fragment {
@@ -18,8 +16,11 @@ public abstract class ViewPagerViewUpdaterFragmentBase extends Fragment {
 
     public abstract void onUpdate();
 
-    @Getter(AccessLevel.PROTECTED)
     private int pageIndex = -1;
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public abstract class ViewPagerViewUpdaterFragmentBase extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (isFirst && pageIndex == 0){
+        if (isFirst && pageIndex == 0) {
             isFirst = false;
             ViewPagerUpdater.getInstance().onSelectedEvent(new ViewPagerPositionEvent(ViewPagerPositionEvent.ScrollState.SELECTED, 0));
         }

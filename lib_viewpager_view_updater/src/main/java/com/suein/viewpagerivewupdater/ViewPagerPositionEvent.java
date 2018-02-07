@@ -1,13 +1,7 @@
 package com.suein.viewpagerivewupdater;
 
-import lombok.AllArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import android.support.annotation.NonNull;
 
-@AllArgsConstructor
-@RequiredArgsConstructor
-@ToString
 public class ViewPagerPositionEvent {
     @NonNull
     public ScrollState scrollState;
@@ -20,5 +14,16 @@ public class ViewPagerPositionEvent {
     public enum ScrollState {
         SCROLLING,
         SELECTED
+    }
+
+    public ViewPagerPositionEvent(@NonNull ScrollState scrollState, @NonNull int currentPage) {
+        this.scrollState = scrollState;
+        this.currentPage = currentPage;
+    }
+
+    public ViewPagerPositionEvent(@NonNull ScrollState scrollState, @NonNull int currentPage, int nextPage) {
+        this.scrollState = scrollState;
+        this.currentPage = currentPage;
+        this.nextPage = nextPage;
     }
 }

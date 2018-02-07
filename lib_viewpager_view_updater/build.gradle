@@ -32,15 +32,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
-    //lombok
-    compileOnly "org.projectlombok:lombok:1.16.16"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    annotationProcessor "org.projectlombok:lombok:1.16.16"
-
     //eventbus
     //https://github.com/greenrobot/EventBus
-    compile 'org.greenrobot:eventbus:3.1.1'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     //guava
-    compile 'com.google.guava:guava:20.0'
+    implementation 'com.google.guava:guava:20.0'
 }

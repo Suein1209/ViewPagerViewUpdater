@@ -1,7 +1,7 @@
 package com.suein.viewpagerivewupdater;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.suein.viewpagerivewupdater.comm.ViewPagerViewUpdaterFragmentBase;
 
@@ -9,13 +9,8 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Hashtable;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import utils.v4.FragmentPagerItemAdapter;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ViewPagerUpdater {
     private volatile static ViewPagerUpdater instance;
 
@@ -30,25 +25,33 @@ public class ViewPagerUpdater {
         return instance;
     }
 
-        private final long INIT_UPDATE_TIME = 10000;
+    private ViewPagerUpdater() {
+    }
+
+    private final long INIT_UPDATE_TIME = 10000;
 //    private final long INIT_UPDATE_TIME = 60000;
 
-    @Setter
-    @Getter
     private long updateTime = INIT_UPDATE_TIME;
+
+    public void setUpdateTime(long updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public long getUpdateTime() {
+        return updateTime;
+    }
 
     @Subscribe
     public void onSelectedEvent(ViewPagerPositionEvent event) {
-
         int itemIndex = event.scrollState == ViewPagerPositionEvent.ScrollState.SELECTED ? event.currentPage : event.nextPage;
-        ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
+        Fragment fragment = ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
+        if (fragment instanceof ViewPagerViewUpdaterFragmentBase){
+            ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
 
-        if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex))) {
-
-            Log.e("suein", "update 친다! = "+itemIndex);
-
-            doUpdateCurrnetTime(itemIndex);
-            csPartnerMainViewFragmentBase.onUpdate();
+            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex))) {
+                doUpdateCurrnetTime(itemIndex);
+                csPartnerMainViewFragmentBase.onUpdate();
+            }
         }
     }
 

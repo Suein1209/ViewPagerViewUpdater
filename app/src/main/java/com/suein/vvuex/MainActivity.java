@@ -20,14 +20,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         FragmentPagerItems pages = new FragmentPagerItems(this);
         pages.add(FragmentPagerItem.of("페이지 1", DummyFragment.class));
         pages.add(FragmentPagerItem.of("페이지 2", DummyFragment.class));
         pages.add(FragmentPagerItem.of("페이지 3", DummyFragment.class));
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.viewPager.setAdapter(adapter);
         ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
+        ViewPagerUpdater.getInstance().setWithoutPage(2, 3);
     }
 }
