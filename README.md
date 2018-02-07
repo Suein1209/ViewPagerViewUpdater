@@ -21,6 +21,8 @@ private ActivityMainBinding binding;
 ```
 FragmentPagerItems는 com.ogaclejapan.smarttablayout:utils-v4 라이브러리다
 
+
+
 # Setup
 viewpager 설정은 단순하다. viewpager를 설정하면 된다.
 
@@ -47,6 +49,12 @@ public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
         Log.e("suein", "DummyFragment = " + getPageIndex());
     }
 }
+```
+
+## update 시간 설정
+시간은 매번 스와핑시 화면을 update 하는 것이 아닌 일정 시간이 지나야 update 되도록 설정 할 수 있다.
+```java
+ViewPagerUpdater.getInstance().setUpdateTime(10000);
 ```
 
 ## Gradle 설정
