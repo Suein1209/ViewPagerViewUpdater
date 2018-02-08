@@ -1,6 +1,3 @@
-# Language
- - [한글](https://github.com/Suein1209/ViewpagerViewUpdater/blob/master/README-kr.md)
-
 # What is Viewpager View Updater
 viewpager로 스와핑시에만 다음 페이지를 읽도록 하는 기능이다.
 
