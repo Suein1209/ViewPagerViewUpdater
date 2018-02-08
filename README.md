@@ -1,3 +1,6 @@
+# Language
+ - [한글](https://github.com/Suein1209/ViewpagerViewUpdater/blob/master/README-kr.md)
+
 # What is Viewpager View Updater
 This function enables you to load the next page only when you move to viewpager.
 
