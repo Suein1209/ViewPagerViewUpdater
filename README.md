@@ -1,5 +1,5 @@
 # What is Viewpager View Updater
-viewpager로 스와핑시에만 다음 페이지를 읽도록 하는 기능이다.
+This function enables you to load the next page only when you move to viewpager.
 
 ```java
 private ActivityMainBinding binding;
@@ -19,26 +19,25 @@ private ActivityMainBinding binding;
         ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
     }
 ```
-FragmentPagerItems는 com.ogaclejapan.smarttablayout:utils-v4 라이브러리다
+FragmentPagerItems is library of "com.ogaclejapan.smarttablayout:utils-v4"
 <br><br>
 
 # Setup
 viewpager 설정은 단순하다. viewpager를 설정하면 된다.
 
-## viewpager 설정
+## viewpager setting
 ```java
 ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
 ```
 
-## viewpager updater 범주에 포함시키지 않도록 설정
-viewpager view updater는 스와핑시에만 스와핑해서 보여질 페이지의 update 하는것이 목적이지만<br>
-이 사이클에서 제외 할 수 있다.
+## Exclude UI updates
+ViewpagerViewUpdater to update UI only the page you will see but can also be excluded.
 ```java
 ViewPagerUpdater.getInstance().setWithoutPage(2, 3);
 ```
 
-## 사용하게될 Fragment의 설정
-사용할 Fragment의 경우에는 ViewPagerViewUpdaterFragmentBase 상속을 받아야 onUpdate() 메소드를 구현해야 한다
+## Setting up a Fragment class
+The Fragment to use must extends ViewPagerViewUpdaterFragmentBase and implement the onUpdate() method.
 ```java
 public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
   ...
@@ -50,13 +49,13 @@ public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
 }
 ```
 
-## update 시간 설정
-시간은 매번 스와핑시 화면을 update 하는 것이 아닌 일정 시간이 지나야 update 되도록 설정 할 수 있다.
+## update time setting
+The time setting does not update every time you move the page, but you can set it up so that it will not be updated until the set time has elapsed.
 ```java
 ViewPagerUpdater.getInstance().setUpdateTime(10000);
 ```
 <br><br>
-## Gradle 설정
+## Gradle setting
 ### root build.gradle
 ```java
 allprojects {
