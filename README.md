@@ -23,7 +23,7 @@ FragmentPagerItems is library of "com.ogaclejapan.smarttablayout:utils-v4"
 <br><br>
 
 # Setup
-viewpager 설정은 단순하다. viewpager를 설정하면 된다.
+Setting is simple. You can set Viewpager on ViewPagerUpdater
 
 ## viewpager setting
 ```java
