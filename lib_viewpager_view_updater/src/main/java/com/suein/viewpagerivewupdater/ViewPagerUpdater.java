@@ -79,6 +79,7 @@ public class ViewPagerUpdater {
     }
 
     private boolean isExistWithoutPage(int pageNum) {
+        if (withoutPages == null) return false;
         for (int page : withoutPages) {
             if (pageNum == page) {
                 return true;
