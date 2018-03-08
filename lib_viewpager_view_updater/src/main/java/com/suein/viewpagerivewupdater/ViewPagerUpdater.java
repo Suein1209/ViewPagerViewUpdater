@@ -43,12 +43,17 @@ public class ViewPagerUpdater {
         int itemIndex = event.scrollState == ViewPagerPositionEvent.ScrollState.SELECTED ? event.currentPage : event.nextPage;
         Fragment fragment = ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
         if (fragment instanceof ViewPagerViewUpdaterFragmentBase){
-            ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
+            final ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
 
             if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex)) && (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
                 csPartnerMainViewFragmentBase.setFirstUpdatedView();
                 doUpdateCurrnetTime(itemIndex);
-                csPartnerMainViewFragmentBase.onUpdate();
+                csPartnerMainViewFragmentBase.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        csPartnerMainViewFragmentBase.onUpdate();
+                    }
+                });
             }
         }
     }
