@@ -30,16 +30,27 @@ public abstract class ViewPagerViewUpdaterFragmentBase extends Fragment {
                 pageIndex = Preconditions.checkNotNull(args.getInt(ARG_PAGE_INDEX));
             }
         }
+        isFirstUpdatedView = true;
         super.onCreate(savedInstanceState);
     }
 
-    private boolean isFirst = true;
+    private boolean isFirstUpdatedView = true;
+
+    public boolean isFirstUpdatedView() {
+        return isFirstUpdatedView;
+    }
+
+    public void setFirstUpdatedView(){
+        isFirstUpdatedView = false;
+    }
+
+    private boolean isFirstSeenView = true;
 
     @Override
     public void onResume() {
         super.onResume();
-        if (isFirst && pageIndex == 0) {
-            isFirst = false;
+        if (isFirstSeenView && pageIndex == 0) {
+            isFirstSeenView = false;
             ViewPagerUpdater.getInstance().onSelectedEvent(new ViewPagerPositionEvent(ViewPagerPositionEvent.ScrollState.SELECTED, 0));
         }
     }

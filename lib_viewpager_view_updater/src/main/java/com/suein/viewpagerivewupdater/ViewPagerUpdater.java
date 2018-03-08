@@ -28,10 +28,7 @@ public class ViewPagerUpdater {
     private ViewPagerUpdater() {
     }
 
-    private final long INIT_UPDATE_TIME = 10000;
-//    private final long INIT_UPDATE_TIME = 60000;
-
-    private long updateTime = INIT_UPDATE_TIME;
+    private long updateTime = -1;
 
     public void setUpdateTime(long updateTime) {
         this.updateTime = updateTime;
@@ -48,7 +45,8 @@ public class ViewPagerUpdater {
         if (fragment instanceof ViewPagerViewUpdaterFragmentBase){
             ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
 
-            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex))) {
+            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex)) && (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
+                csPartnerMainViewFragmentBase.setFirstUpdatedView();
                 doUpdateCurrnetTime(itemIndex);
                 csPartnerMainViewFragmentBase.onUpdate();
             }
@@ -62,6 +60,9 @@ public class ViewPagerUpdater {
     private final Hashtable<Integer, Long> upateTimeMap = new Hashtable<Integer, Long>();
 
     private boolean isNeedUpdate(int itemIndex) {
+
+        if (updateTime == -1) return true;
+
         if (upateTimeMap.containsKey(itemIndex)) {
             long newUpdateTime = System.currentTimeMillis();
             long oldUpdateTime = upateTimeMap.get(itemIndex);
@@ -133,13 +134,6 @@ public class ViewPagerUpdater {
         @Override
         public void onPageScrollStateChanged(int state) {
             if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                int currentPage = viewPager.getCurrentItem();
-
-                if (isPostEvent == false) {
-                    ViewPagerPositionEvent viewPagerPositionEvent = new ViewPagerPositionEvent(ViewPagerPositionEvent.ScrollState.SELECTED, currentPage);
-                    onSelectedEvent(viewPagerPositionEvent);
-                }
-
                 isPostEvent = false;
             }
             scrollState = state;
@@ -147,6 +141,10 @@ public class ViewPagerUpdater {
 
         @Override
         public void onPageSelected(int position) {
+            if (!isPostEvent) {
+                ViewPagerPositionEvent viewPagerPositionEvent = new ViewPagerPositionEvent(ViewPagerPositionEvent.ScrollState.SELECTED, position);
+                onSelectedEvent(viewPagerPositionEvent);
+            }
             isPostEvent = false;
         }
 
