@@ -26,4 +26,13 @@ public class ViewPagerPositionEvent {
         this.currentPage = currentPage;
         this.nextPage = nextPage;
     }
+
+    @Override
+    public String toString() {
+        return "ViewPagerPositionEvent{" +
+                "scrollState=" + scrollState +
+                ", currentPage=" + currentPage +
+                ", nextPage=" + nextPage +
+                '}';
+    }
 }

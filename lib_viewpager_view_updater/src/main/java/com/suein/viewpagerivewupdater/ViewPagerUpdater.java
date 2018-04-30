@@ -45,7 +45,8 @@ public class ViewPagerUpdater {
         if (fragment instanceof ViewPagerViewUpdaterFragmentBase){
             final ViewPagerViewUpdaterFragmentBase csPartnerMainViewFragmentBase = (ViewPagerViewUpdaterFragmentBase) ((FragmentPagerItemAdapter) this.viewPager.getAdapter()).getPage(itemIndex);
 
-            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex)) && (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
+//            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex)) && (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
+                if (((updateTime != -1) && isNeedUpdate(itemIndex)) || (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
                 csPartnerMainViewFragmentBase.setFirstUpdatedView();
                 doUpdateCurrnetTime(itemIndex);
                 csPartnerMainViewFragmentBase.getActivity().runOnUiThread(new Runnable() {
@@ -65,9 +66,6 @@ public class ViewPagerUpdater {
     private final Hashtable<Integer, Long> upateTimeMap = new Hashtable<Integer, Long>();
 
     private boolean isNeedUpdate(int itemIndex) {
-
-        if (updateTime == -1) return true;
-
         if (upateTimeMap.containsKey(itemIndex)) {
             long newUpdateTime = System.currentTimeMillis();
             long oldUpdateTime = upateTimeMap.get(itemIndex);
