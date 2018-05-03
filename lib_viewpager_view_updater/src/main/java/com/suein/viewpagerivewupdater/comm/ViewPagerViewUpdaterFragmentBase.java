@@ -40,8 +40,9 @@ public abstract class ViewPagerViewUpdaterFragmentBase extends Fragment {
         return isFirstUpdatedView;
     }
 
-    public void setFirstUpdatedView(){
-        isFirstUpdatedView = false;
+    public void setFirstUpdatedView(boolean isFirstUpdatedView) {
+        this.isFirstUpdatedView = isFirstUpdatedView;
+
     }
 
     private boolean isFirstSeenView = true;

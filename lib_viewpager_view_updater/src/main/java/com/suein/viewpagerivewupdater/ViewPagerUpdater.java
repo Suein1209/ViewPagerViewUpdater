@@ -47,7 +47,7 @@ public class ViewPagerUpdater {
 
 //            if (isNeedUpdate(itemIndex) && (!isExistWithoutPage(itemIndex)) && (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
                 if (((updateTime != -1) && isNeedUpdate(itemIndex)) || (csPartnerMainViewFragmentBase.isFirstUpdatedView())) {
-                csPartnerMainViewFragmentBase.setFirstUpdatedView();
+                csPartnerMainViewFragmentBase.setFirstUpdatedView(false);
                 doUpdateCurrnetTime(itemIndex);
                 csPartnerMainViewFragmentBase.getActivity().runOnUiThread(new Runnable() {
                     @Override
