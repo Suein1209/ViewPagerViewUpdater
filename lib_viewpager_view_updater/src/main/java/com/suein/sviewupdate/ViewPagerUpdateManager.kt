@@ -27,6 +27,11 @@ class ViewPagerUpdateManager {
         val instance: ViewPagerUpdateManager by lazy { Holder.INSTANCE }
     }
 
+    var isEnableLogging = false
+        set(value) {
+            SLog.isEnableLogging = value
+        }
+
     private var viewPageMap: HashMap<String, MutableList<UpdateItem>> = hashMapOf()
 
     private val currentViewMap: HashMap<String, Int> = hashMapOf()
