@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.suein.viewpagerivewupdater.comm.ViewPagerViewUpdaterFragmentBase;
+import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase;
 import com.suein.vvuex.R;
 import com.suein.vvuex.databinding.FragmentDummyBinding;
 
-public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
+public class DummyFragment2 extends ViewPagerUpdateFragmentBase {
 
     private FragmentDummyBinding binding;
 
@@ -27,6 +27,6 @@ public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
     @Override
     public void onUpdate() {
         binding.tvCenterText.setText("View Updated");
-        Log.e("suein", "DummyFragment = " + getPageIndex());
+        Log.e("suein", "DummyFragment2 view updated");
     }
 }

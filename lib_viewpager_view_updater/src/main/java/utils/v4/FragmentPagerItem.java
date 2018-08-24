@@ -19,6 +19,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase;
+
 import utils.PagerItem;
 
 public class FragmentPagerItem extends PagerItem {
@@ -33,30 +35,36 @@ public class FragmentPagerItem extends PagerItem {
 
     private final String className;
     private final Bundle args;
+    private final Class<? extends ViewPagerUpdateFragmentBase> clazz;
 
-    protected FragmentPagerItem(CharSequence title, float width, String className, Bundle args) {
+    protected FragmentPagerItem(CharSequence title, float width, String className, Class<? extends ViewPagerUpdateFragmentBase> clazz, Bundle args) {
         super(title, width);
         this.className = className;
         this.args = args;
+        this.clazz = clazz;
     }
 
-    public static FragmentPagerItem of(CharSequence title, Class<? extends Fragment> clazz) {
+    public Class<? extends ViewPagerUpdateFragmentBase> getFragmentClazz(){
+        return clazz;
+    }
+
+    public static FragmentPagerItem of(CharSequence title, Class<? extends ViewPagerUpdateFragmentBase> clazz) {
         return of(title, DEFAULT_WIDTH, clazz);
     }
 
-    public static FragmentPagerItem of(CharSequence title, Class<? extends Fragment> clazz,
+    public static FragmentPagerItem of(CharSequence title, Class<? extends ViewPagerUpdateFragmentBase> clazz,
                                        Bundle args) {
         return of(title, DEFAULT_WIDTH, clazz, args);
     }
 
     public static FragmentPagerItem of(CharSequence title, float width,
-                                       Class<? extends Fragment> clazz) {
+                                       Class<? extends ViewPagerUpdateFragmentBase> clazz) {
         return of(title, width, clazz, new Bundle());
     }
 
     public static FragmentPagerItem of(CharSequence title, float width,
-                                       Class<? extends Fragment> clazz, Bundle args) {
-        return new FragmentPagerItem(title, width, clazz.getName(), args);
+                                       Class<? extends ViewPagerUpdateFragmentBase> clazz, Bundle args) {
+        return new FragmentPagerItem(title, width, clazz.getName(), clazz, args);
     }
 
     public static boolean hasPosition(Bundle args) {

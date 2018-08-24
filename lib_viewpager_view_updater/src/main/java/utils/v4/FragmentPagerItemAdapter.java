@@ -21,12 +21,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
 import android.view.ViewGroup;
 
+import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase;
+
 import java.lang.ref.WeakReference;
 
 public class FragmentPagerItemAdapter extends FragmentPagerAdapter {
 
     private final FragmentPagerItems pages;
-    private final SparseArrayCompat<WeakReference<Fragment>> holder;
+    private final SparseArrayCompat<WeakReference<ViewPagerUpdateFragmentBase>> holder;
 
     public FragmentPagerItemAdapter(FragmentManager fm, FragmentPagerItems pages) {
         super(fm);
@@ -48,7 +50,7 @@ public class FragmentPagerItemAdapter extends FragmentPagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         Object item = super.instantiateItem(container, position);
         if (item instanceof Fragment) {
-            holder.put(position, new WeakReference<Fragment>((Fragment) item));
+            holder.put(position, new WeakReference<ViewPagerUpdateFragmentBase>((ViewPagerUpdateFragmentBase) item));
         }
         return item;
     }
@@ -70,7 +72,7 @@ public class FragmentPagerItemAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getPage(int position) {
-        final WeakReference<Fragment> weakRefItem = holder.get(position);
+        final WeakReference<ViewPagerUpdateFragmentBase> weakRefItem = holder.get(position);
         return (weakRefItem != null) ? weakRefItem.get() : null;
     }
 

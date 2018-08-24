@@ -18,7 +18,8 @@ package utils.v4;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
+
+import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase;
 
 import utils.PagerItems;
 
@@ -41,28 +42,28 @@ public class FragmentPagerItems extends PagerItems<FragmentPagerItem> {
             items = new FragmentPagerItems(context);
         }
 
-        public Creator add(@StringRes int title, Class<? extends Fragment> clazz) {
+        public Creator add(@StringRes int title, Class<? extends ViewPagerUpdateFragmentBase> clazz) {
             return add(FragmentPagerItem.of(items.getContext().getString(title), clazz));
         }
 
-        public Creator add(@StringRes int title, Class<? extends Fragment> clazz, Bundle args) {
+        public Creator add(@StringRes int title, Class<? extends ViewPagerUpdateFragmentBase> clazz, Bundle args) {
             return add(FragmentPagerItem.of(items.getContext().getString(title), clazz, args));
         }
 
-        public Creator add(@StringRes int title, float width, Class<? extends Fragment> clazz) {
+        public Creator add(@StringRes int title, float width, Class<? extends ViewPagerUpdateFragmentBase> clazz) {
             return add(FragmentPagerItem.of(items.getContext().getString(title), width, clazz));
         }
 
-        public Creator add(@StringRes int title, float width, Class<? extends Fragment> clazz,
+        public Creator add(@StringRes int title, float width, Class<? extends ViewPagerUpdateFragmentBase> clazz,
                            Bundle args) {
             return add(FragmentPagerItem.of(items.getContext().getString(title), width, clazz, args));
         }
 
-        public Creator add(CharSequence title, Class<? extends Fragment> clazz) {
+        public Creator add(CharSequence title, Class<? extends ViewPagerUpdateFragmentBase> clazz) {
             return add(FragmentPagerItem.of(title, clazz));
         }
 
-        public Creator add(CharSequence title, Class<? extends Fragment> clazz, Bundle args) {
+        public Creator add(CharSequence title, Class<? extends ViewPagerUpdateFragmentBase> clazz, Bundle args) {
             return add(FragmentPagerItem.of(title, clazz, args));
         }
 
