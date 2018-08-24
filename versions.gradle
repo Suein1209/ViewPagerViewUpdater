@@ -1,0 +1,38 @@
+ext.deps = [:]
+
+def versions = [:]
+versions.kotlin = "1.2.51"
+versions.support = "27.1.0"
+versions.anko_commons = "0.10.5"
+versions.eventbus = "3.1.1"
+
+def deps = [:]
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.reflect = "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
+deps.kotlin = kotlin
+
+def support = [:]
+support.app_compat = "com.android.support:appcompat-v7:$versions.support"
+deps.support = support
+
+deps.anko_commons = "org.jetbrains.anko:anko-commons:$versions.anko_commons"
+deps.eventbus = "org.greenrobot:eventbus:$versions.eventbus"
+
+ext.deps = deps
+
+def build_versions = [:]
+build_versions.min_sdk = 19
+build_versions.target_sdk = 28
+build_versions.build_tools = "28.0.2"
+ext.build_versions = build_versions
+
+def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+ext.addRepos = this.&addRepos

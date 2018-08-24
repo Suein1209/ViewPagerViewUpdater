@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ViewpagerViewUpdater.iml" filepath="$PROJECT_DIR$/ViewpagerViewUpdater.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ViewpagerViewUpdater.iml" filepath="$PROJECT_DIR$/ViewpagerViewUpdater.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib_viewpager_view_updater/lib_viewpager_view_updater.iml" filepath="$PROJECT_DIR$/lib_viewpager_view_updater/lib_viewpager_view_updater.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib_viewpager_view_updater/lib_viewpager_view_updater.iml" filepath="$PROJECT_DIR$/lib_viewpager_view_updater/lib_viewpager_view_updater.iml" />
     </modules>
   </component>
