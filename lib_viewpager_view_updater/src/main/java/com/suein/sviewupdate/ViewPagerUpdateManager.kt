@@ -154,8 +154,24 @@ fun ViewPagerUpdateFragmentBase.resetUpdateFlag() = updateMgr.resetUpdateFlag(co
  * 현재 메모리 상에 존재 하는 fragment view를 강제로 update 한다.
  * 단, 호출되는 시점에는 update 하는 view가 bg상태에 있으면 update가 되지 않는다.
  */
+fun ViewPagerUpdateFragmentBase.forceUpdateView(keyClass: KClass<*>) {
+    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(keyClass.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, getPageIndex(), -1, true))
+}
+
+/**
+ * 현재 메모리 상에 존재 하는 fragment view를 강제로 update 한다.
+ * 단, 호출되는 시점에는 update 하는 view가 bg상태에 있으면 update가 되지 않는다.
+ */
 fun ViewPagerUpdateFragmentBase.forceUpdateView() {
-    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SELECTED, getPageIndex(), -1, true))
+    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(context!!::class.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, getPageIndex(), -1, true))
+}
+
+/**
+ * 현재 메모리 상에 존재 하는 fragment view를 강제로 update 한다.
+ * 단, 호출되는 시점에는 update 하는 view가 bg상태에 있으면 update가 되지 않는다.
+ */
+fun Activity.forceUpdateView(keyClass: KClass<*>, pageIndex: Int) {
+    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(keyClass.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, pageIndex, -1, true))
 }
 
 /**
@@ -163,7 +179,7 @@ fun ViewPagerUpdateFragmentBase.forceUpdateView() {
  * 단, 호출되는 시점에는 update 하는 view가 bg상태에 있으면 update가 되지 않는다.
  */
 fun Activity.forceUpdateView(pageIndex: Int) {
-    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SELECTED, pageIndex, -1, true))
+    EventBus.getDefault().post(ViewPagerUpdatePositionEvent(this::class.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, pageIndex, -1, true))
 }
 
 /**
@@ -185,6 +201,12 @@ fun Activity.setOnUpdateViewAll(keyClass: KClass<*>) = updateMgr.setOnUpdateView
 fun Activity.setOnUpdateView(elementFragment: KClass<out ViewPagerUpdateFragmentBase>) = updateMgr.setOnUpdateView(this::class, elementFragment)
 
 /**
+ * 지정된 1개의 view의 update flag를 설정한다.
+ * 설정된 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
+ */
+fun Activity.setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) = updateMgr.setOnUpdateView(keyClass, elementFragment)
+
+/**
  * ViewPager에 등록된 모든 Fragment View의 update flag를 설정한다.
  * 각 해당하는 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
  */
@@ -201,6 +223,12 @@ fun ViewPagerUpdateFragmentBase.setOnUpdateView() = updateMgr.setOnUpdateView(co
  * 설정된 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
  */
 fun ViewPagerUpdateFragmentBase.setOnUpdateView(elementFragment: KClass<out ViewPagerUpdateFragmentBase>) = updateMgr.setOnUpdateView(context!!::class, elementFragment)
+
+/**
+ * 지정된 1개의 view의 update flag를 설정한다.
+ * 설정된 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
+ */
+fun ViewPagerUpdateFragmentBase.setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) = updateMgr.setOnUpdateView(keyClass, elementFragment)
 
 /**
  * SViewPagerUpdate를 적용시킬 Fragment view를 등록한다.

@@ -51,7 +51,7 @@ abstract class ViewPagerUpdateFragmentBase : Fragment() {
     override fun onResume() {
         super.onResume()
         val currentIndex = (context as Activity).getCurrentItemIndex()
-        if (isCurrentView(ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SELECTED, currentIndex)) && isNeedUpdate()) {
+        if (isCurrentView(ViewPagerUpdatePositionEvent(context!!::class.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, currentIndex)) && isNeedUpdate()) {
             SLog.i("[Info][onResume] Update view! Index is $currentIndex")
             onUpdate()
             resetUpdateFlag()
@@ -59,13 +59,10 @@ abstract class ViewPagerUpdateFragmentBase : Fragment() {
         EventBus.getDefault().register(this)
     }
 
-    private val isCurrentView: (ViewPagerUpdatePositionEvent) -> Boolean = {
-        pageIndex == getUpdateViewIndex(it)
-    }
+    private fun isCurrentView(event: ViewPagerUpdatePositionEvent) = pageIndex == getUpdateViewIndex(event) && context!!::class.qualifiedName == event.keyClassName
 
-    private val getUpdateViewIndex: (ViewPagerUpdatePositionEvent) -> Int = {
-        if (it.scrollState == ViewPagerUpdatePositionEvent.ScrollState.SELECTED) it.currentPage else it.nextPage
-    }
+    private fun getUpdateViewIndex(event: ViewPagerUpdatePositionEvent): Int =
+            if (event.scrollState == ViewPagerUpdatePositionEvent.ScrollState.SELECTED) event.currentPage else event.nextPage
 
     /**
      * [ViewPagerUpdateListener]로 부터 update 이벤트가 전달되면 현재 구현돼 있는 fragment를 view update 한다.

@@ -5,17 +5,14 @@ package com.suein.sviewupdate
  * Email : suein1209@gmail.com
  * Created by suein1209 on 2018. 8. 6..
  */
-class ViewPagerUpdatePositionEvent(val scrollState: ScrollState, val currentPage: Int = 0, val nextPage: Int = -1, val isForceUpdate: Boolean = false) {
+class ViewPagerUpdatePositionEvent(val keyClassName: String?, val scrollState: ScrollState, val currentPage: Int = 0, val nextPage: Int = -1, val isForceUpdate: Boolean = false) {
     enum class ScrollState {
         SCROLLING,
         SELECTED
     }
 
     override fun toString(): String {
-        return "ViewPagerUpdatePositionEvent{" +
-                "scrollState=" + scrollState +
-                ", currentPage=" + currentPage +
-                ", nextPage=" + nextPage +
-                '}'.toString()
+        return "ViewPagerUpdatePositionEvent(keyClassName=$keyClassName, scrollState=$scrollState, currentPage=$currentPage, nextPage=$nextPage, isForceUpdate=$isForceUpdate)"
     }
+
 }
