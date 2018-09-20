@@ -32,10 +32,10 @@ class ViewPagerUpdateListener(private val activityClazz: KClass<*>) : ViewPager.
 
             var viewPagerPositionEvent: ViewPagerUpdatePositionEvent? = null
             if (positionOffset >= 0.5) {
-                viewPagerPositionEvent = ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SCROLLING, currentItem, currentItem - 1)
+                viewPagerPositionEvent = ViewPagerUpdatePositionEvent(activityClazz.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SCROLLING, currentItem, currentItem - 1)
 
             } else if (positionOffset < 0.5) {
-                viewPagerPositionEvent = ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SCROLLING, currentItem, currentItem + 1)
+                viewPagerPositionEvent = ViewPagerUpdatePositionEvent(activityClazz.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SCROLLING, currentItem, currentItem + 1)
             }
 
             viewPagerPositionEvent?.let {
@@ -58,7 +58,7 @@ class ViewPagerUpdateListener(private val activityClazz: KClass<*>) : ViewPager.
         updateMgr.setCurrnetItemIndex(activityClazz, position)
 
         if (!isPostEvent) {
-            EventBus.getDefault().post(ViewPagerUpdatePositionEvent(ViewPagerUpdatePositionEvent.ScrollState.SELECTED, position))
+            EventBus.getDefault().post(ViewPagerUpdatePositionEvent(activityClazz.qualifiedName, ViewPagerUpdatePositionEvent.ScrollState.SELECTED, position))
         }
         isPostEvent = false
     }
