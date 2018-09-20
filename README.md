@@ -1,62 +1,74 @@
-# Language
- - [한글](https://github.com/Suein1209/ViewpagerViewUpdater/blob/master/README-kr.md)
-
 # What is Viewpager View Updater
+## Init FragmentActivity
 This function enables you to load the next page only when you move to viewpager.
 
 ```java
 private ActivityMainBinding binding;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        FragmentPagerItems pages = new FragmentPagerItems(this);
-        pages.add(FragmentPagerItem.of("페이지 1", DummyFragment.class));
-        pages.add(FragmentPagerItem.of("페이지 2", DummyFragment.class));
-        pages.add(FragmentPagerItem.of("페이지 3", DummyFragment.class));
-        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(getSupportFragmentManager(), pages);
-
-        binding.viewPager.setAdapter(adapter);
-        ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
-    }
+override fun onCreate(savedInstanceState: Bundle?) {  
+    super.onCreate(savedInstanceState)  
+  
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_main)  
+    val pages = FragmentPagerItems(this)  
+    pages.add(FragmentPagerItem.of("페이지 1", DummyFragment1::class.java))  
+    pages.add(FragmentPagerItem.of("페이지 2", DummyFragment2::class.java))  
+    pages.add(FragmentPagerItem.of("페이지 3", DummyFragment3::class.java))  
+    pages.add(FragmentPagerItem.of("페이지 4", DummyFragment4::class.java))  
+    val adapter = FragmentPagerItemAdapter(supportFragmentManager, pages)  
+    binding!!.viewPager.adapter = adapter  
+  
+    //update 발생시 event를 전달하는 update listener 등록  
+	binding!!.viewPager.addOnPageChangeListener(ViewPagerUpdateListener(this::class))
+}
 ```
 FragmentPagerItems is library of "com.ogaclejapan.smarttablayout:utils-v4"
+
+
 <br><br>
+
 
 # Setup
 Setting is simple. You can set Viewpager on ViewPagerUpdater
 
 ## viewpager setting
 ```java
-ViewPagerUpdater.getInstance().setViewPager(binding.viewPager);
+putViewPagers(pages)
 ```
 
-## Exclude UI updates
-ViewpagerViewUpdater to update UI only the page you will see but can also be excluded.
-```java
-ViewPagerUpdater.getInstance().setWithoutPage(2, 3);
-```
 
 ## Setting up a Fragment class
 The Fragment to use must extends ViewPagerViewUpdaterFragmentBase and implement the onUpdate() method.
 ```java
-public class DummyFragment extends ViewPagerViewUpdaterFragmentBase {
+class DummyFragment : ViewPagerUpdateFragmentBase() {
   ...
-    @Override
-    public void onUpdate() {
-        binding.tvCenterText.setText("View Updated");
-        Log.e("suein", "DummyFragment = " + getPageIndex());
-    }
+	override fun onUpdate() {  
+	  Log.i("suein", "DummyFragment view updated")  
+	}
 }
 ```
 
-## update time setting
-The time setting does not update every time you move the page, but you can set it up so that it will not be updated until the set time has elapsed.
-```java
-ViewPagerUpdater.getInstance().setUpdateTime(10000);
+## Using
+The update flag setting ensures that the next page is updated when it is displayed. Pages are grouped by registered Key Class name. The screen update is updated based on the key class name, and is used as the name of the current class in which the method is called or when this parameter is updated.
+
+
+Set all registered all pages update flags
+```kotlin
+setOnUpdateViewAll(MainActivity::class) // MainActivity::class is key class
+setOnUpdateViewAll()
 ```
+Set the update flag for one page
+```kotlin
+setOnUpdateView(DummyFragment1::class)  
+setOnUpdateView(MainActivity::class, DummyFragment1::class) //MainActivity::class is key class
+```
+
+Execute an update of a specific page(fragment). Only available if the status is greater than onResume
+```kotlin
+forceUpdateView(1) // 1 is fragment index
+forceUpdateView(MainActivity::class, 2) //MainActivity::class is key class, 2 is fragment index
+```
+
+
 <br><br>
 ## Gradle setting
 ### root build.gradle
@@ -67,11 +79,10 @@ allprojects {
     maven { url 'https://jitpack.io' }
   }
 }
-  
 ```
 ### dependency
 ```java
 dependencies {
-  compile 'com.github.Suein1209:ViewpagerViewUpdater:0.0.2'
+  compile 'com.github.Suein1209:ViewpagerViewUpdater:0.0.8'
 }
 ```
