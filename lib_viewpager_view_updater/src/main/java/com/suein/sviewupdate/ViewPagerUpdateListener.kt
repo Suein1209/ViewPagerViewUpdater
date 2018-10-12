@@ -1,8 +1,6 @@
-package com.wemakeprice.partner.ui.comm.viewupdate
+package com.suein.sviewupdate
 
 import android.support.v4.view.ViewPager
-import com.suein.sviewupdate.ViewPagerUpdatePositionEvent
-import com.suein.sviewupdate.updateMgr
 import org.greenrobot.eventbus.EventBus
 import kotlin.reflect.KClass
 

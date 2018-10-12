@@ -6,7 +6,6 @@ import android.app.Activity
 import com.suein.sviewupdate.comm.SLog
 import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase
 import com.suein.sviewupdate.comm.checkNotNullSafety
-import com.wemakeprice.partner.ui.comm.viewupdate.ViewPagerUpdateListener
 import org.greenrobot.eventbus.EventBus
 import utils.v4.FragmentPagerItems
 import kotlin.reflect.KClass

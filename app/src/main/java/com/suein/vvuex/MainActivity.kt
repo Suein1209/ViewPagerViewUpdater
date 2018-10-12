@@ -3,13 +3,13 @@ package com.suein.vvuex
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.suein.sviewupdate.*
+import com.suein.sviewupdate.ViewPagerUpdateListener
+import com.suein.sviewupdate.putViewPagers
 import com.suein.vvuex.databinding.ActivityMainBinding
 import com.suein.vvuex.fragments.DummyFragment1
 import com.suein.vvuex.fragments.DummyFragment2
 import com.suein.vvuex.fragments.DummyFragment3
 import com.suein.vvuex.fragments.DummyFragment4
-import com.wemakeprice.partner.ui.comm.viewupdate.ViewPagerUpdateListener
 import utils.v4.FragmentPagerItem
 import utils.v4.FragmentPagerItemAdapter
 import utils.v4.FragmentPagerItems
