@@ -52,9 +52,9 @@ class ViewPagerUpdateManager {
     fun resetKeyClassMap() = viewPageMap.clear()
 
     private fun doProcNotExistsKeyClass(keyClassName: String?) {
-        SLog.e("존재 하지 않는 Key Class 입니다. Class Name = $keyClassName")
+        SLog.e("The class does not exist. Class Name = $keyClassName")
         if (SViewPagerConstants.isOccursNotExistsClassKey) {
-            error("존재 하지 않는 Key Class 입니다. Class Name = $keyClassName")
+            error("The class does not exist. Class Name = $keyClassName")
         }
     }
 
