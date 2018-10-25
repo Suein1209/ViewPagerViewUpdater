@@ -3,6 +3,7 @@
 package com.suein.sviewupdate
 
 import android.app.Activity
+import android.util.Log
 import com.suein.sviewupdate.comm.SLog
 import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase
 import com.suein.sviewupdate.comm.checkNotNullSafety
@@ -56,6 +57,8 @@ class ViewPagerUpdateManager {
             }?.run {
                 return isNeedUpdate
             }
+        } else {
+            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
         }
         return false
     }
@@ -72,6 +75,8 @@ class ViewPagerUpdateManager {
             }?.run {
                 return isFirstShow
             }
+        } else {
+            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
         }
         return false
     }
@@ -82,12 +87,14 @@ class ViewPagerUpdateManager {
     internal fun resetUpdateFlag(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
         if (viewPageMap.containsKey(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
-            checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {}?.run {
+            checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
+                error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            }?.run {
                 isNeedUpdate = false
                 isFirstShow = false
             }
         } else {
-            SLog.e("[Error] resetUpdateFlag :: Key Class가 등록되어 있지 않습니다.")
+            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
         }
     }
 
@@ -98,11 +105,13 @@ class ViewPagerUpdateManager {
     internal fun setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
         if (viewPageMap.containsKey(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
-            checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {}?.run {
+            checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
+                error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            }?.run {
                 isNeedUpdate = true
             }
         } else {
-            SLog.e("[Error] setOnUpdateView :: Key Class가 등록되어 있지 않습니다.")
+            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
         }
     }
 
@@ -113,10 +122,11 @@ class ViewPagerUpdateManager {
     internal fun setOnUpdateViewAll(keyClass: KClass<*>) {
         if (viewPageMap.containsKey(keyClass.qualifiedName)) {
             viewPageMap[keyClass.qualifiedName]!!.forEach {
+                Log.e("ServiceDev2", "setOnUpdateViewAll = 3")
                 it.isNeedUpdate = true
             }
         } else {
-            SLog.e("[Error] setOnUpdateViewAll :: Key Class가 등록되어 있지 않습니다.")
+            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
         }
     }
 
