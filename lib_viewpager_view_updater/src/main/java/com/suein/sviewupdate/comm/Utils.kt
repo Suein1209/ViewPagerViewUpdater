@@ -24,19 +24,21 @@ internal inline fun <T : Any> checkNotNullSafety(value: T?, nullCallBack: () -> 
 internal object SLog {
     private val LOG_TAG = "SViewUpdate"
     var isEnableLogging = true
+    var isEnableErrorLogging = true
 
-    fun i(msg : String){
-        if (isEnableLogging)
+
+    fun i(msg: String) {
+        if (isEnableLogging && !isEnableErrorLogging)
             Log.i(LOG_TAG, msg)
     }
 
-    fun d(msg : String){
-        if (isEnableLogging)
+    fun d(msg: String) {
+        if (isEnableLogging && !isEnableErrorLogging)
             Log.d(LOG_TAG, msg)
     }
 
-    fun e(msg : String){
-        if (isEnableLogging)
+    fun e(msg: String) {
+        if (isEnableLogging || isEnableErrorLogging)
             Log.e(LOG_TAG, msg)
     }
 }

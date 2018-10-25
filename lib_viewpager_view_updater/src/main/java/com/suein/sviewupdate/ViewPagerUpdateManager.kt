@@ -5,6 +5,7 @@ package com.suein.sviewupdate
 import android.app.Activity
 import android.util.Log
 import com.suein.sviewupdate.comm.SLog
+import com.suein.sviewupdate.comm.SViewPagerConstants
 import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase
 import com.suein.sviewupdate.comm.checkNotNullSafety
 import org.greenrobot.eventbus.EventBus
@@ -46,11 +47,22 @@ class ViewPagerUpdateManager {
         viewPageMap[keyClass.qualifiedName]!!.add(UpdateItem(elementFragment.qualifiedName!!, pageIndex))
     }
 
+    fun isExistKeyClass(keyClassName: String?) = viewPageMap.containsKey(keyClassName)
+    fun isEmptyKeyClass() = viewPageMap.isEmpty()
+    fun resetKeyClassMap() = viewPageMap.clear()
+
+    private fun doProcNotExistsKeyClass(keyClassName: String?) {
+        SLog.e("존재 하지 않는 Key Class 입니다. Class Name = $keyClassName")
+        if (SViewPagerConstants.isOccursNotExistsClassKey) {
+            error("존재 하지 않는 Key Class 입니다. Class Name = $keyClassName")
+        }
+    }
+
     /**
      * update flag가 설정되어 있는지 확인한다.
      */
     internal fun isNeedUpdate(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>): Boolean {
-        if (viewPageMap.containsKey(keyClass.qualifiedName)) {
+        if (isExistKeyClass(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
             checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
                 return false
@@ -58,7 +70,7 @@ class ViewPagerUpdateManager {
                 return isNeedUpdate
             }
         } else {
-            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            doProcNotExistsKeyClass(keyClass.qualifiedName)
         }
         return false
     }
@@ -68,7 +80,7 @@ class ViewPagerUpdateManager {
      * (초기화 유/무 확인)
      */
     internal fun isFirstShow(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>): Boolean {
-        if (viewPageMap.containsKey(keyClass.qualifiedName)) {
+        if (isExistKeyClass(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
             checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
                 return false
@@ -76,7 +88,7 @@ class ViewPagerUpdateManager {
                 return isFirstShow
             }
         } else {
-            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            doProcNotExistsKeyClass(keyClass.qualifiedName)
         }
         return false
     }
@@ -85,7 +97,7 @@ class ViewPagerUpdateManager {
      * update flag와 first show flag를 초기화 한다.
      */
     internal fun resetUpdateFlag(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
-        if (viewPageMap.containsKey(keyClass.qualifiedName)) {
+        if (isExistKeyClass(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
             checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
                 error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
@@ -94,7 +106,7 @@ class ViewPagerUpdateManager {
                 isFirstShow = false
             }
         } else {
-            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            doProcNotExistsKeyClass(keyClass.qualifiedName)
         }
     }
 
@@ -103,7 +115,7 @@ class ViewPagerUpdateManager {
      * 설정된 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
      */
     internal fun setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
-        if (viewPageMap.containsKey(keyClass.qualifiedName)) {
+        if (isExistKeyClass(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
             checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
                 error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
@@ -111,7 +123,7 @@ class ViewPagerUpdateManager {
                 isNeedUpdate = true
             }
         } else {
-            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            doProcNotExistsKeyClass(keyClass.qualifiedName)
         }
     }
 
@@ -120,13 +132,13 @@ class ViewPagerUpdateManager {
      * 각 해당하는 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
      */
     internal fun setOnUpdateViewAll(keyClass: KClass<*>) {
-        if (viewPageMap.containsKey(keyClass.qualifiedName)) {
+        if (isExistKeyClass(keyClass.qualifiedName)) {
             viewPageMap[keyClass.qualifiedName]!!.forEach {
                 Log.e("ServiceDev2", "setOnUpdateViewAll = 3")
                 it.isNeedUpdate = true
             }
         } else {
-            error("존재 하지 않는 Key Class 입니다. Class Name = ${keyClass.qualifiedName}")
+            doProcNotExistsKeyClass(keyClass.qualifiedName)
         }
     }
 
