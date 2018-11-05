@@ -3,7 +3,6 @@
 package com.suein.sviewupdate
 
 import android.app.Activity
-import android.util.Log
 import com.suein.sviewupdate.comm.SLog
 import com.suein.sviewupdate.comm.SViewPagerConstants
 import com.suein.sviewupdate.comm.ViewPagerUpdateFragmentBase
@@ -114,7 +113,7 @@ class ViewPagerUpdateManager {
      * 지정된 1개의 view의 update flag를 설정한다.
      * 설정된 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
      */
-    internal fun setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
+    fun setOnUpdateView(keyClass: KClass<*>, elementFragment: KClass<out ViewPagerUpdateFragmentBase>) {
         if (isExistKeyClass(keyClass.qualifiedName)) {
             val fragmentName = elementFragment.qualifiedName
             checkNotNullSafety(viewPageMap[keyClass.qualifiedName]!!.find { it.fragmentClass == fragmentName }) {
@@ -131,10 +130,9 @@ class ViewPagerUpdateManager {
      * ViewPager에 등록된 모든 Fragment View의 update flag를 설정한다.
      * 각 해당하는 화면의 onResume()메소드나 Drag를 통해 보여졌을때 화면을 update 한다.
      */
-    internal fun setOnUpdateViewAll(keyClass: KClass<*>) {
+    fun setOnUpdateViewAll(keyClass: KClass<*>) {
         if (isExistKeyClass(keyClass.qualifiedName)) {
             viewPageMap[keyClass.qualifiedName]!!.forEach {
-                Log.e("ServiceDev2", "setOnUpdateViewAll = 3")
                 it.isNeedUpdate = true
             }
         } else {
